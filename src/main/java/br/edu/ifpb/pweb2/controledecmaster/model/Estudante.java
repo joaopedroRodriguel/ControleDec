@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Data
-
 public class Estudante {
 
     @Id
@@ -29,8 +28,8 @@ public class Estudante {
 
     //Relacioanamentos
 
-    @OneToMany
-    private List<Declaracao> declaracaoAtual;
+    @OneToOne
+    private Declaracao declaracaoAtual;
 
     @OneToOne
     private Instituicao instituicaoAtual;

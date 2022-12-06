@@ -12,12 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/estudantes")
 public class EstudanteController {
 
     @Autowired
     EstudanteRepository estudanteRepository;
+
+    @GetMapping("/listar")
+    public String listar() {
+        return "TESTE";
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getCadastroEstudantes(ModelAndView mv) {
