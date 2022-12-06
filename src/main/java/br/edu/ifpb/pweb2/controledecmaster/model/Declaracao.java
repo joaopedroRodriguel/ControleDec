@@ -23,10 +23,10 @@ public class Declaracao {
 
     //Relacionamentos
 
-    @ManyToOne
+    @OneToOne
     private Estudante estudante;
 
-    @ManyToOne
+    @OneToOne
     private PeriodoLetivo periodoLetivo;
 
 
