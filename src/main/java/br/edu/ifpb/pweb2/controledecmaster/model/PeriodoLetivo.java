@@ -33,7 +33,7 @@ public class PeriodoLetivo {
     @OneToMany
     private List<Declaracao> declaracoes;
 
-    @ManyToOne
+    @OneToOne
     private Instituicao instituicao;
 
 }
