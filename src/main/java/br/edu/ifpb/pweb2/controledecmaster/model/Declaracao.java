@@ -1,9 +1,9 @@
 package br.edu.ifpb.pweb2.controledecmaster.model;
 
-import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
