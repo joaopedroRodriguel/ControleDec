@@ -1,20 +1,19 @@
 package br.edu.ifpb.pweb2.controledecmaster.controller;
 
+
 import br.edu.ifpb.pweb2.controledecmaster.auxiliar.SenhaAuxiliar;
 import br.edu.ifpb.pweb2.controledecmaster.model.Estudante;
 import br.edu.ifpb.pweb2.controledecmaster.repository.EstudanteRepository;
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
+import javax.validation.Valid;
 
-@Controller
+
+@RestController
 @RequestMapping("/estudantes")
 public class EstudanteController {
 
@@ -23,7 +22,7 @@ public class EstudanteController {
 
     @GetMapping("/listar")
     public String listar() {
-        return "TESTE";
+        return "TESTE11";
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -64,10 +63,10 @@ public class EstudanteController {
         return mv;
     }
 
-    @RequestMapping("/sair")
+    /*@RequestMapping("/sair")
     public String sair(HttpSession session) {
         System.out.println("saindo");
         session.invalidate();
         return "redirect:/login";
-    }
+    }*/
 }
