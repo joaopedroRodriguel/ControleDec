@@ -28,11 +28,11 @@ public class Instituicao {
 
     //Relacionamentos
 
-    @OneToMany
+    /*@OneToMany
     private List<Estudante> estudantes;
 
-    @OneToMany
-    private List<PeriodoLetivo> periodoAtual;
+    @OneToOne
+    private PeriodoLetivo periodoAtual;*/
 
 
 }

@@ -22,17 +22,15 @@ public class Estudante {
     @NotBlank(message="Campo obrigatório!")
     private String matricula;
 
-    @NotBlank(message="Campo obrigatório")
-    @Size(min=6, message = "Senha deve ter no mínimo 6 caracteres")
-    private String senha;
+
 
 
     //Relacioanamentos
 
-    @OneToOne
+    /*@OneToOne
     private Declaracao declaracaoAtual;
 
     @OneToOne
-    private Instituicao instituicaoAtual;
+    private Instituicao instituicaoAtual;*/
 
 }

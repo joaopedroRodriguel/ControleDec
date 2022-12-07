@@ -23,11 +23,11 @@ public class Declaracao {
 
     //Relacionamentos
 
-    @OneToOne
+    /*@OneToOne
     private Estudante estudante;
 
     @OneToOne
-    private PeriodoLetivo periodoLetivo;
+    private PeriodoLetivo periodoLetivo;*/
 
 
 }

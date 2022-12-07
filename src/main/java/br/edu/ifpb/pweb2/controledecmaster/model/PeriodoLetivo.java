@@ -29,10 +29,10 @@ public class PeriodoLetivo {
 
     //Relacionamentos
 
-    @OneToMany
+   /* @OneToMany
     private List<Declaracao> declaracoes;
 
     @OneToOne
-    private Instituicao instituicao;
+    private Instituicao instituicao;*/
 
 }
