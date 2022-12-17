@@ -1,59 +1,48 @@
 package br.edu.ifpb.pweb2.controledecmaster.controller;
 
 import br.edu.ifpb.pweb2.controledecmaster.model.Estudante;
-import br.edu.ifpb.pweb2.controledecmaster.repository.DeclaracaoRepository;
-import br.edu.ifpb.pweb2.controledecmaster.repository.EstudanteRepository;
-import br.edu.ifpb.pweb2.controledecmaster.repository.InstituicaoRepository;
+import br.edu.ifpb.pweb2.controledecmaster.service.EstudanteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
+
 
 @RestController
-@RequestMapping("/estudantes")
+@RequestMapping("/api/estudante")
 public class EstudanteController {
 
     @Autowired
-    EstudanteRepository estudanteRepository;
+    EstudanteService estudanteService;
 
-    @Autowired
-    DeclaracaoRepository declaracaoRepository;
-
-    @Autowired
-    InstituicaoRepository instituicaoRepository;
-
-
-    @RequestMapping()
-    public ModelAndView getCadastroEstudantes(ModelAndView mv) {
-        mv.addObject("estudante", new Estudante());
-        mv.setViewName("estudantes/estudantes");
-        return mv;
+    @GetMapping("/listestudantes")
+    public ResponseEntity<?> list(){
+        List<Estudante> estudantes = estudanteService.list();
+        return new ResponseEntity<>(estudantes, HttpStatus.OK);
     }
 
-    @RequestMapping()
-    public ModelAndView listAll(ModelAndView mv) {
-        mv.setViewName("estudantes/list");
-        mv.addObject("estudantes", estudanteRepository.findAll());
-        return mv;
+    @GetMapping("/searchestudante/{id}")
+    public ResponseEntity<?> search(Long id) {
+        Optional<Estudante> estudante = estudanteService.search(id);
+        return new ResponseEntity<>(estudante, HttpStatus.OK);
     }
 
-    @RequestMapping()
-    @Transactional
-    public ModelAndView save(Estudante estudante, ModelAndView mv, RedirectAttributes attr) {
-        estudanteRepository.save(estudante);
-        mv.setViewName("redirect:estudantes");
-        attr.addFlashAttribute("mensagem", estudante.getNome() + " cadastrado com sucesso!");
-        attr.addFlashAttribute("estudante", estudante);
-        return mv;
+    @PostMapping("/insertestudante")
+    public ResponseEntity<?> insert(@RequestBody Estudante estudante) {
+        return new ResponseEntity<>(estudanteService.insert(estudante), HttpStatus.CREATED);
     }
 
-    @RequestMapping()
-    public ModelAndView deleteById(@PathVariable(value = "id") Long id, ModelAndView mav, RedirectAttributes attr) {
-        estudanteRepository.deleteById(id);
-        attr.addFlashAttribute("mensagem", "Estudante removido com sucesso!");
-        mav.setViewName("redirect:/estudantes");
-        return mav;
+    @PutMapping("/updateestudante/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Estudante newEstudante){
+        Estudante estudante = estudanteService.update(id, newEstudante);
+        return new ResponseEntity<>(estudante, HttpStatus.OK);
     }
 
+    @DeleteMapping("/deleteestudante/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        estudanteService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

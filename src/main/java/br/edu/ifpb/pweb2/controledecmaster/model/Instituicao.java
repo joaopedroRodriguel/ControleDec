@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,14 +25,12 @@ public class Instituicao {
     @NotBlank(message = "Campo Obrigatório")
     private String fone;
 
-
-    //Relacionamentos
-
-    /*@OneToMany
-    private List<Estudante> estudantes;
-
-    @OneToOne
+/*    @ManyToOne
     private PeriodoLetivo periodoAtual;*/
 
+    @ManyToMany
+    private List<PeriodoLetivo> periodoLetivos;
+
+    private String periodoAtual;
 
 }

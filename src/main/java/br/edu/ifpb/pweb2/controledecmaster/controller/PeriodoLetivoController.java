@@ -1,61 +1,56 @@
 package br.edu.ifpb.pweb2.controledecmaster.controller;
 
 
-import br.edu.ifpb.pweb2.controledecmaster.model.PeriodoLetivo;
-import br.edu.ifpb.pweb2.controledecmaster.repository.DeclaracaoRepository;
-import br.edu.ifpb.pweb2.controledecmaster.repository.InstituicaoRepository;
-import br.edu.ifpb.pweb2.controledecmaster.repository.PeriodoLetivoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.transaction.Transactional;
+import br.edu.ifpb.pweb2.controledecmaster.model.PeriodoLetivo;
+import br.edu.ifpb.pweb2.controledecmaster.service.PeriodoLetivoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Optional;
+
 
 @RestController
-@RequestMapping("periodosletivos")
+@RequestMapping("/api/periodoletivo")
 public class PeriodoLetivoController {
 
     @Autowired
-    PeriodoLetivoRepository periodoLetivoRepository;
+    PeriodoLetivoService periodoLetivoService;
 
-    @Autowired
-    InstituicaoRepository instituicaoRepository;
-
-    @Autowired
-    DeclaracaoRepository declaracaoRepository;
-
-    @RequestMapping()
-    public ModelAndView getCadastroPeriodoLetivo(ModelAndView mv) {
-        mv.addObject("periodosletivos", new PeriodoLetivo());
-        mv.setViewName("periodosletivos/periodosletivos");
-        return mv;
+    @GetMapping("/listperiodosletivos")
+    public ResponseEntity<?> list(){
+        List<PeriodoLetivo> periodoLetivos = periodoLetivoService.list();
+        return new ResponseEntity<>(periodoLetivos, HttpStatus.OK);
     }
 
-    @RequestMapping()
-    public ModelAndView listAll(ModelAndView mv) {
-        mv.setViewName("periodosletivos/list");
-        mv.addObject("periodosletivos", periodoLetivoRepository.findAll());
-        return mv;
+    @GetMapping("/searchperiodoletivo/{id}")
+    public ResponseEntity<?> search(Long id) {
+        Optional<PeriodoLetivo> periodoLetivo = periodoLetivoService.search(id);
+        return new ResponseEntity<>(periodoLetivo, HttpStatus.OK);
     }
 
-    @RequestMapping()
-    @Transactional
-    public ModelAndView save(PeriodoLetivo periodoLetivo, ModelAndView mv, RedirectAttributes attr) {
-        periodoLetivoRepository.save(periodoLetivo);
-        mv.setViewName("redirect:periodosletivos");
-        attr.addFlashAttribute("mensagem", periodoLetivo.getPeriodo() + " cadastrado com sucesso!");
-        attr.addFlashAttribute("periodosletivos", periodoLetivo);
-        return mv;
+    @PostMapping("/insertperiodoletivo")
+    public ResponseEntity<?> insert(@RequestBody PeriodoLetivo periodoLetivo) {
+        return new ResponseEntity<>(periodoLetivoService.insert(periodoLetivo), HttpStatus.CREATED);
     }
 
-    @RequestMapping()
-    public ModelAndView deleteById(@PathVariable(value = "id") Long id, ModelAndView mv, RedirectAttributes attr) {
-        periodoLetivoRepository.deleteById(id);
-        attr.addFlashAttribute("mensagem", "Periodo-Letivo removido com sucesso!");
-        mv.setViewName("redirect:/periodosletivos");
-        return mv;
+    @PutMapping("/updateperiodoletivo/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody PeriodoLetivo newPeriodoLetivo){
+        PeriodoLetivo periodoLetivo = periodoLetivoService.update(id, newPeriodoLetivo);
+        return new ResponseEntity<>(periodoLetivo, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteperiodoletivo/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        periodoLetivoService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/periodoAtual")
+    public ResponseEntity<?> periodoLetivo() {
+        PeriodoLetivo periodoLetivo = periodoLetivoService.periodoAtual();
+        return new ResponseEntity<>(periodoLetivo, HttpStatus.OK);
     }
 }

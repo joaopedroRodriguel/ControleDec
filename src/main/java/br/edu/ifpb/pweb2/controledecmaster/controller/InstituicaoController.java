@@ -1,62 +1,52 @@
 package br.edu.ifpb.pweb2.controledecmaster.controller;
 
-
 import br.edu.ifpb.pweb2.controledecmaster.model.Instituicao;
-import br.edu.ifpb.pweb2.controledecmaster.repository.EstudanteRepository;
-import br.edu.ifpb.pweb2.controledecmaster.repository.InstituicaoRepository;
-import br.edu.ifpb.pweb2.controledecmaster.repository.PeriodoLetivoRepository;
+import br.edu.ifpb.pweb2.controledecmaster.service.InstituicaoService;
+import br.edu.ifpb.pweb2.controledecmaster.service.PeriodoLetivoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Optional;
 
-import javax.transaction.Transactional;
 
 @RestController
-@RequestMapping("instituicoes")
+@RequestMapping("/api/instituicao")
 public class InstituicaoController {
 
     @Autowired
-    InstituicaoRepository instituicaoRepository;
+    InstituicaoService instituicaoService;
 
-    @Autowired
-    EstudanteRepository estudanteRepository;
+    PeriodoLetivoService periodoLetivoService;
 
-    @Autowired
-    PeriodoLetivoRepository periodoLetivoRepository;
-
-    @RequestMapping()
-    public ModelAndView getCadastroInstituicoes(ModelAndView mv) {
-        mv.addObject("instituicao", new Instituicao());
-        mv.setViewName("instituicoes/instituicoes");
-        return mv;
+    @GetMapping("/listinstituicoes")
+    public ResponseEntity<?> list(){
+        List<Instituicao> instituicoes = instituicaoService.list();
+        return new ResponseEntity<>(instituicoes, HttpStatus.OK);
     }
 
-    @RequestMapping()
-    public ModelAndView listAll(ModelAndView mv) {
-        mv.setViewName("instituicoes/list");
-        mv.addObject("instituicoes", instituicaoRepository.findAll());
-        return mv;
+    @GetMapping("/searchinstituicao/{id}")
+    public ResponseEntity<?> search(Long id) {
+        Optional<Instituicao> instituicao = instituicaoService.search(id);
+        return new ResponseEntity<>(instituicao, HttpStatus.OK);
     }
 
-    @RequestMapping()
-    @Transactional
-    public ModelAndView save(Instituicao instituicao, ModelAndView mv, RedirectAttributes attr) {
-        instituicaoRepository.save(instituicao);
-        mv.setViewName("redirect:instituicoes");
-        attr.addFlashAttribute("mensagem", instituicao.getNome() + " cadastrado com sucesso!");
-        attr.addFlashAttribute("instituicao", instituicao);
-        return mv;
+    @PostMapping("/insertinstituicao")
+    public ResponseEntity<?> insert(@RequestBody Instituicao instituicao) {
+        return new ResponseEntity<>(instituicaoService.insert(instituicao), HttpStatus.CREATED);
     }
 
-    @RequestMapping()
-    public ModelAndView deleteById(@PathVariable(value = "id") Long id, ModelAndView mv, RedirectAttributes attr) {
-        instituicaoRepository.deleteById(id);
-        attr.addFlashAttribute("mensagem", "Instituicao removida com sucesso!");
-        mv.setViewName("redirect:/instituicoes");
-        return mv;
+    @PutMapping("/updateinstituicao/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Instituicao newInstituicao){
+        Instituicao instituicao = instituicaoService.update(id, newInstituicao);
+        return new ResponseEntity<>(instituicao, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteinstituicao/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        instituicaoService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

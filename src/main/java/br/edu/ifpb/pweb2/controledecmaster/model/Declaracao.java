@@ -1,13 +1,18 @@
 package br.edu.ifpb.pweb2.controledecmaster.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class Declaracao {
 
     @Id
@@ -15,18 +20,17 @@ public class Declaracao {
     private Long id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dataRecebimento;
+    private LocalDateTime dataRecebimento;
 
     private String observacao;
 
+    private String nome_Estudante;
 
-    //Relacionamentos
+    private String matricula;
 
-    /*@OneToOne
-    private Estudante estudante;
+    @ManyToMany
+    private List<PeriodoLetivo> periodoLetivo;
 
-    @OneToOne
-    private PeriodoLetivo periodoLetivo;*/
-
-
+    /*@ManyToMany
+    private List<Estudante> estudantes;*/
 }
