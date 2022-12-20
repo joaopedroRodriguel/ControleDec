@@ -31,6 +31,6 @@ public class Instituicao {
     @ManyToMany
     private List<PeriodoLetivo> periodoLetivos;
 
-    private String periodoAtual;
+    //private String periodoAtual;
 
 }

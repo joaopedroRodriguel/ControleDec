@@ -22,7 +22,7 @@ public class PeriodoLetivo {
     private int ano;
 
     @NotBlank(message = "Campo Obrigatório")
-    private  String periodo;
+    private  int periodo;
 
     @NotBlank(message = "Campo Obrigatório")
     private LocalDate inicio;

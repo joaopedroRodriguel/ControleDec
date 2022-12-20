@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface EstudanteRepository extends JpaRepository<Estudante, Long> {
 
-//    @Query(value = "SELECT  FROM ESTUDANTE_INSTITUICOES ORDER BY INSTITUICAO_ID DESC LIMIT 1", nativeQuery = true)
-//    Instituicao buscaInstituicaoAtual();
+    @Query(value = "SELECT  FROM ESTUDANTE_INSTITUICOES ORDER BY INSTITUICAO_ID DESC LIMIT 1", nativeQuery = true)
+    Instituicao buscaInstituicaoAtual();
 }

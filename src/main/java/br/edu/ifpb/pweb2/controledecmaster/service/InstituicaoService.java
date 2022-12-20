@@ -25,11 +25,15 @@ public class InstituicaoService {
     }
 
     public Optional<Instituicao> search(Long id){
-        Optional<Instituicao> instituicao = instituicaoRepository.findById(id);
-        List<PeriodoLetivo> periodoLetivos = instituicao.get().getPeriodoLetivos();
-        instituicao.get().setPeriodoAtual((periodoLetivos.get(periodoLetivos.size() -1).getPeriodo()));
-        return instituicao;
+        return instituicaoRepository.findById(id);
     }
+
+//    public Optional<Instituicao> searchatual(Long id){
+//        Optional<Instituicao> instituicao = instituicaoRepository.findById(id);
+//        List<PeriodoLetivo> periodoLetivos = instituicao.get().getPeriodoLetivos();
+//        instituicao.get().setPeriodoAtual((periodoLetivos.get(periodoLetivos.size() -1).getPeriodo()));
+//        return instituicao;
+//    }
 
     public Instituicao insert(Instituicao instituicao){
         return instituicaoRepository.save(instituicao);
