@@ -24,7 +24,7 @@ public class Estudante {
     @ManyToMany
     private List<Instituicao> instituicoes;
 
-    private String instituicaoAtual;
+    //private String instituicaoAtual;
 
    /* @ManyToMany
     private List<Declaracao> declaracoes;

@@ -2,6 +2,7 @@ package br.edu.ifpb.pweb2.controledecmaster.service;
 
 import br.edu.ifpb.pweb2.controledecmaster.model.Estudante;
 import br.edu.ifpb.pweb2.controledecmaster.model.Instituicao;
+import br.edu.ifpb.pweb2.controledecmaster.model.PeriodoLetivo;
 import br.edu.ifpb.pweb2.controledecmaster.repository.EstudanteRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,15 @@ public class EstudanteService {
     }
 
     public Optional<Estudante> search(Long id){
-        Optional<Estudante> estudante = estudanteRepository.findById(id);
-        List<Instituicao> instituicaos = estudante.get().getInstituicoes();
-        estudante.get().setInstituicaoAtual(instituicaos.get(instituicaos.size() -1).getNome());
-        return estudante;
+        return estudanteRepository.findById(id);
     }
+
+//    public Optional<Estudante> search(Long id){
+//        Optional<Estudante> estudante = estudanteRepository.findById(id);
+//        List<Instituicao> instituicaos = estudante.get().getInstituicoes();
+//        estudante.get().setInstituicaoAtual(instituicaos.get(instituicaos.size() -1).getNome());
+//        return estudante;
+//    }
 
     public Estudante insert(Estudante estudante){
         return estudanteRepository.save(estudante);
